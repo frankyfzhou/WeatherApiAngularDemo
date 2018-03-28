@@ -1,0 +1,9 @@
+<div class = 'panel panel-primary' *ngFor='let city of filteredCities'>
+    <div class = 'panel-heading'>
+      {{city.name}}, {{city.country}}
+    </div>
+
+    <a class='btn btn-default' (click)='Add(city.id)' style='width:80px'>
+        <i class='glyphicon glyphicon-chevron-left'></i> Add
+    </a>
+</div>

@@ -1,0 +1,32 @@
+<div class = 'panel panel-primary' *ngIf='weatherData'>
+    <div class = 'panel-heading'>
+      {{weatherData.name}}, {{weatherData.sys.country}}
+    </div>
+
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-6'>
+                <div class='row'>
+                    <div class='col-md-6'>Temperature:</div>
+                    <div class='col-md-6'>{{weatherData.main.temp}}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-6'>Humidity:</div>
+                    <div class='col-md-6'>{{weatherData.main.humidity}}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-6'>Wind:</div>
+                    <div class='col-md-6'>{{weatherData.wind.speed + ' ' +weatherData.wind.deg}}</div>
+                </div>
+            </div>
+  
+            <div class='col-md-6' *ngIf='weatherData.weather[0]'>
+                <img class='center-block img-responsive' 
+                     [style.width.px]='50' 
+                     [style.margin.px]='2' 
+                     [src]='"http://openweathermap.org/img/w/" + weatherData.weather[0].icon + ".png"'
+                     [title]='weatherData.weather[0].main'>
+            </div>
+        </div>
+    </div>
+</div>
