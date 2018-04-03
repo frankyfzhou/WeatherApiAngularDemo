@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy
-    , ChangeDetectorRef } from '@angular/core';
+    , ChangeDetectorRef, 
+    OnDestroy} from '@angular/core';
 import { IWeatherData } from './weatherData';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WeatherService } from './weather.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'city-detail',
@@ -10,9 +12,10 @@ import { WeatherService } from './weather.service';
     styleUrls: ['./citydetail.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CityDetailComponent implements OnInit {
+export class CityDetailComponent implements OnInit, OnDestroy {
     @Input() cityId: number;
     weatherData: IWeatherData;
+    weathersubscription: Subscription;
     
     constructor(private _route: ActivatedRoute,
                 private _router: Router,
@@ -26,10 +29,16 @@ export class CityDetailComponent implements OnInit {
             if (!this.cityId) return;
         }
 
-        this.weatherService.getCityById(this.cityId)
+        this.weathersubscription = 
+        this.weatherService.getCityByIdRepeat(this.cityId, 3000)
+        // this.weatherService.getCityById(this.cityId)
         .subscribe(r=>{
             this.weatherData = r;
             this.changeDetector.detectChanges();
         });
+    }
+
+    ngOnDestroy(): void {
+        this.weathersubscription.unsubscribe();
     }
 }

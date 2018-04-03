@@ -2,11 +2,10 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Observable } from 'rxjs/Observable';
 import { IWeatherData } from './weatherData'
-import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/from';
-import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/timer';
 import { IWeatherResponseData } from './weatherReturnObj';
 import { ICity } from './city';
 
@@ -17,20 +16,17 @@ export class WeatherService {
 
     constructor(private http: HttpClient)
     {
+        let citiesUrl = "./assets/city.list.json";
+        this.http.get<ICity[]>(citiesUrl).subscribe(r=>{
+            this.cities=<ICity[]>r;
+        });
     }
 
     getCitiesByName(name: string): Observable<ICity> {
-        if (!this.cities)
+        if (!this.cities||name === '')
         {
-            let citiesUrl = "./assets/city.list.json";
-            this.http.get<ICity[]>(citiesUrl).subscribe(r=>{
-                this.cities=<ICity[]>r;
-            });
-
             return Observable.from([]);
         }
-
-        if (name === '') return Observable.from([]);
 
         let rx = new RegExp('^' + name, "i");
 
@@ -43,6 +39,13 @@ export class WeatherService {
 
     getCityById(id: number): Observable<IWeatherData> {
         var url = this.getCityUrl + id;
-        return this.http.get<IWeatherData>(url)
+        return this.http.get<IWeatherData>(url);
+    }
+
+    getCityByIdRepeat(id: number, delayMs: number): Observable<IWeatherData> {
+        return Observable.timer(0, delayMs).flatMap((n)=>{
+        var url = this.getCityUrl + id;
+        return this.http.get<IWeatherData>(url);
+        });
     }
 }
