@@ -1,0 +1,16 @@
+<div id='searchlist' class='has-feedback'>
+    <input type='text' class="form-control " [(ngModel)] = "filter" placeholder="Search for city">
+    <i class="glyphicon glyphicon-search form-control-feedback"></i>
+</div>
+
+<div id='leftside'>
+    <cities-list [text]='filter' (onAddCity)="Add($event)"></cities-list>
+    <!-- <cities-list [text]='filter' [onAddTest]="Add"></cities-list> -->
+</div><div id='rightside'>
+    <div class="panel panel-primary" *ngFor="let c of cityIds">
+        <city-detail [cityId]='c'></city-detail>
+        <a class='btn btn-default' (click)='Remove(c)' style='width:100px'>
+            <i class='glyphicon glyphicon-chevron-left'></i> Remove
+        </a>
+    </div>
+</div>

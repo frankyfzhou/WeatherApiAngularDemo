@@ -14,6 +14,7 @@ import { ICity } from './city';
 })
 export class CitiesListComponent implements OnChanges {
     @Input() text;
+    // @Input() onAddTest;
     @Output() onAddCity = new EventEmitter<number>();
 
     filteredCities: ICity[] = [];
@@ -30,6 +31,7 @@ export class CitiesListComponent implements OnChanges {
     }
 
     Add(cityId) {
+        // this.onAddTest(cityId);
         this.onAddCity.emit(cityId);
     }
 }

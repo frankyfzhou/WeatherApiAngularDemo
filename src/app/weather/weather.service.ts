@@ -12,7 +12,7 @@ import { ICity } from './city';
 
 @Injectable()
 export class WeatherService {
-    private getCityUrl = "http://api.openweathermap.org/data/2.5/weather?appid=62160c31d261d22adda78160df1c10e3&id=";
+    private getCityUrl = "http://api.openweathermap.org/data/2.5/weather?appid=62160c31d261d22adda78160df1c10e3&units=metric&id=";
     private cities: ICity[];
 
     constructor(private http: HttpClient)

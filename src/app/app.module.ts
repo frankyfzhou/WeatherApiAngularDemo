@@ -1,14 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 
 import { AppComponent } from './app.component';
 import { WeatherModule } from './weather/weather.module';
 import { CityDetailComponent } from './weather/citydetail.component';
+import { WeatherMainComponent } from './weather/weathermain.component';
 
+const appRoutes: Routes = [
+  { path: '', component: WeatherMainComponent }
+];
 
 @NgModule({
   declarations: [
@@ -16,12 +19,9 @@ import { CityDetailComponent } from './weather/citydetail.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     WeatherModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      // {path: '', component: WeatherComponent},
-    ])
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

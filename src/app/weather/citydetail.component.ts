@@ -20,8 +20,13 @@ export class CityDetailComponent implements OnInit {
                 private weatherService: WeatherService) { }
 
     ngOnInit(): void {
+        if (!this.cityId)
+        {
+            this.cityId = +this._route.snapshot.paramMap.get('id');
+            if (!this.cityId) return;
+        }
+
         this.weatherService.getCityById(this.cityId)
-        .do(d=>console.log(JSON.stringify(d)))
         .subscribe(r=>{
             this.weatherData = r;
             this.changeDetector.detectChanges();

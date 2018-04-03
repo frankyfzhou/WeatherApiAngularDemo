@@ -1,26 +1,30 @@
-<div class = 'panel panel-primary' *ngIf='weatherData'>
+<div class = 'panel panel-primary' *ngIf='weatherData; else placeholderTemplate'>
     <div class = 'panel-heading'>
       {{weatherData.name}}, {{weatherData.sys.country}}
     </div>
 
     <div class='panel-body'>
         <div class='row'>
-            <div class='col-md-6'>
+            <div class='col-md-9'>
+                <div class='row'>
+                    <div class='col-md-6'>Id:</div>
+                    <div class='col-md-6'>{{weatherData.id}}</div>
+                </div>
                 <div class='row'>
                     <div class='col-md-6'>Temperature:</div>
-                    <div class='col-md-6'>{{weatherData.main.temp}}</div>
+                    <div class='col-md-6'>{{weatherData.main.temp}} &deg;C</div>
                 </div>
                 <div class='row'>
                     <div class='col-md-6'>Humidity:</div>
-                    <div class='col-md-6'>{{weatherData.main.humidity}}</div>
+                    <div class='col-md-6'>{{weatherData.main.humidity}}%</div>
                 </div>
                 <div class='row'>
                     <div class='col-md-6'>Wind:</div>
-                    <div class='col-md-6'>{{weatherData.wind.speed + ' ' +weatherData.wind.deg}}</div>
+                    <div class='col-md-6'>{{weatherData.wind.speed}} m/s, {{weatherData.wind.deg|degToCard}}</div>
                 </div>
             </div>
   
-            <div class='col-md-6' *ngIf='weatherData.weather[0]'>
+            <div class='col-md-3' *ngIf='weatherData.weather[0]'>
                 <img class='center-block img-responsive' 
                      [style.width.px]='50' 
                      [style.margin.px]='2' 
@@ -30,3 +34,7 @@
         </div>
     </div>
 </div>
+
+<ng-template #placeholderTemplate>
+    <div class = 'panel panel-primary'>Loading</div>
+</ng-template>
